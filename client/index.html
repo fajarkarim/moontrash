@@ -10,22 +10,20 @@
 </head>
 <body>
   <div id="app">
-    {{ message }}
-    <div v-if="isLogin == false">
-      <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-      </fb:login-button>
-      <login></login>
+    <navbar></navbar>
+    <div class="container">
+      <div class="row">
+        <div v-if="isLogin == false">
+          <login></login>
+          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+          </fb:login-button>
+        </div>
+        <div v-else>
+          <button @click="logout">logout</button>
+        </div>
     </div>
-    <div v-else>
-      <button @click="logout">logout</button>
+
     </div>
-    <div class="login">
-      <ol>
-        <todo-item></todo-item>
-      </ol>
-    </div>
-  </div>
-  <div id="status">
   </div>
 <script>
   // This is called with the results from from FB.getLoginStatus().
@@ -34,16 +32,12 @@
     console.log(response);
 
     if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
+      loginFB();
       app.isLogin = true
     } else {
-      // The person is not logged into your app or we are unable to tell.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-        app.isLogin = false
+      console.log('not logged in');
+      app.isLogin = false
     }
-
   }
 
   function checkLoginState() {
@@ -77,13 +71,10 @@
 
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
+  function loginFB() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me?fields=email,name,gender', function(response) {
       console.log(response);
-
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.email + '!';
     });
   }
 

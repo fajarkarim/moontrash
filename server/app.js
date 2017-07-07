@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
 
-var index = require('./routes/index');
+var posts = require('./routes/posts');
 var users = require('./routes/users');
 
 mongoose.connect('mongodb://localhost/moontrash',{
@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', index);
+app.use('/posts', posts);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

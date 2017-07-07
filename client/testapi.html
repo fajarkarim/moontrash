@@ -4,7 +4,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <p>Click the button to get your coordinates.</p>
 
-<button onclick="getLocation()">Try It</button>
+<button onclick="cobaTest()">Try It</button>
 
 <p id="demo"></p>
 
@@ -27,6 +27,16 @@ function showPosition(position) {
     .then(function(response) {
       x.innerHTML = response.data.results[0].formatted_address
     })
+}
+
+function cobaTest() {
+  axios.post("http://localhost:3000/analyze-picture", {
+    img: "http://2.bp.blogspot.com/-H9fGS9LpINY/VNXvp-IwxTI/AAAAAAAAFNk/FRIwAE74Xlk/s1600/Sampah.jpg"
+  }).then(function(response) {
+    x.innerHTML = response.data[0].class
+  }).catch(function(err) {
+    console.log(err);
+  })
 }
 
 </script>

@@ -28,7 +28,8 @@ router.post('/analyze-picture', function(req, res) {
     console.log(err);
   } else
     // res.send(JSON.parse(JSON.stringify(response.images[0].classifiers[0].classes, null, 1)));
-    res.send(JSON.stringify(response, null, 1));
+    console.log('berhasil');
+    res.send(JSON.stringify(response.images[0].classifiers[0].classes, null, 1));
   })
 })
 

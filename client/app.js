@@ -22,6 +22,7 @@ var app = new Vue({
               "message": "ada sampah"
           },
           function (response) {
+            console.log(response);
             if (response && !response.error) {
               console.log(`succsecc`);
             }
@@ -39,14 +40,16 @@ var app = new Vue({
     createImage(file) {
       // console.log(file);
       var image = new Image();
+      console.log(image.src);
       var reader = new FileReader();
 
       var vm = this;
+      console.log(vm);
 
       reader.onload = (e) => {
         // console.log(e);
         vm.image = e.target.result;
-        console.log(vm);
+        // console.log(vm);
       };
       reader.readAsDataURL(file);
     },

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Facebook Login JavaScript Example</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue@2.3.4"></script>
+
+<style media="screen">
+  img {
+        width: 30%;
+        margin: auto;
+        display: block;
+        margin-bottom: 10px;
+      }
+</style>
+
+</head>
+<body>
+  <div id="app">
+    <div v-if="isLogin == false">
+      <navbar></navbar>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div v-if="isLogin == false">
+          <div class="row">
+            <div class="col-md-3 col-md-offset-4 text-center">
+              <div class="panel panel-primary class">
+              <div class="panel-heading">Login Facebook
+              </div>
+              <br>
+              <div class="panel-body">
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
+              </div>
+            </div>
+            </div>
+          </div>
+
+        </div>
+        <div v-else>
+          <div class="row">
+            <div class="text-right">
+              <button class="btn btn-info btn-lg" @click="logout"><span class="glyphicon glyphicon-log-out"></span>logout</button>
+            </div>
+            <div class="text-center">
+              <h1>Halo, {{ name }}</h1>
+              <h3>is there any garbage around you?</h3>
+              <div v-if="!image">
+                <h3>Select an image</h3>
+                <input type="file" @change="onFileChange">
+              </div>
+              <div v-else>
+                <img :src="image" />
+                <button @click="removeImage">Remove image</button>
+                <button @click="postStatus">post now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+
+    if (response.status === 'connected') {
+      loginFB();
+      app.isLogin = true
+    } else {
+      console.log('not logged in');
+      app.isLogin = false
+    }
+  }
+
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '311509492641739',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+
+    FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function loginFB() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me?fields=email,name,gender', function(response) {
+      console.log(response);
+      app.name = response.name
+    });
+  }
+
+</script>
+<script src="components.js" charset="utf-8"></script>
+<script src="app.js"></script>
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+
+
+</body>
+</html>

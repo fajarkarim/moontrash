@@ -6,23 +6,63 @@
 <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@2.3.4"></script>
+
+<style media="screen">
+  img {
+        width: 30%;
+        margin: auto;
+        display: block;
+        margin-bottom: 10px;
+      }
+</style>
+
 </head>
 <body>
   <div id="app">
-    <navbar></navbar>
+    <div v-if="isLogin == false">
+      <navbar></navbar>
+    </div>
     <div class="container">
       <div class="row">
         <div v-if="isLogin == false">
-          <login></login>
-          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-          </fb:login-button>
+          <div class="row">
+            <div class="col-md-3 col-md-offset-4 text-center">
+              <div class="panel panel-primary class">
+              <div class="panel-heading">Login Facebook
+              </div>
+              <br>
+              <div class="panel-body">
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
+              </div>
+            </div>
+            </div>
+          </div>
+
         </div>
         <div v-else>
-          <button @click="logout">logout</button>
+          <div class="row">
+            <div class="text-right">
+              <button class="btn btn-info btn-lg" @click="logout"><span class="glyphicon glyphicon-log-out"></span>logout</button>
+            </div>
+            <div class="text-center">
+              <h1>Halo, {{ name }}</h1>
+              <h3>is there any garbage around you?</h3>
+              <div v-if="!image">
+                <h3>Select an image</h3>
+                <input type="file" @change="onFileChange">
+              </div>
+              <div v-else>
+                <img :src="image" />
+                <button @click="removeImage">Remove image</button>
+                <button @click="postStatus">post now</button>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-
+      </div>
     </div>
   </div>
 <script>
@@ -75,10 +115,9 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me?fields=email,name,gender', function(response) {
       console.log(response);
+      app.name = response.name
     });
   }
-
-
 
 </script>
 <script src="components.js" charset="utf-8"></script>

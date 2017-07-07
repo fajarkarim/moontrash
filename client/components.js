@@ -1,4 +1,4 @@
-Vue.component('todo-item', {
+Vue.component('', {
   template: '<li>This is a todo</li>'
 })
 
@@ -40,18 +40,61 @@ Vue.component('navbar', {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">MoonTrash</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
+        <li class=""><a href="#"><span class="sr-only">(current)</span></a></li>
+        <li><a href="#"></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
+        <li><a href="#"></a></li>
       </ul>
     </div>
   </div>
 </nav>`
+})
+
+Vue.component('upload', {
+  template: `
+  <div class="row">
+      <hr style="margin-bottom:25px;" />
+      <div class="col-sm-12" style="margin-bottom:20px;">
+          <label class="btn-bs-file btn btn-lg btn-primary">
+              Yup !
+              <input type="file" />
+          </label>
+      </div>
+    </div>
+  `
+})
+
+Vue.component('upload-coba', {
+  template : `
+  <div class="row">
+    <span class="btn btn-default btn-file">
+      Browse <input type="file">
+    </span>
+  </div>
+  `
+})
+
+Vue.component('upload-coba2', {
+  template : `
+  <div class="col-md-6">
+      <div class="form-group">
+          <label>Upload Image</label>
+          <div class="input-group">
+              <span class="input-group-btn">
+                  <span class="btn btn-default btn-file">
+                      Browse… <input type="file" id="imgInp">
+                  </span>
+              </span>
+              <input type="text" class="form-control" readonly>
+          </div>
+          <img id='img-upload'/>
+      </div>
+  </div>
+  `
 })

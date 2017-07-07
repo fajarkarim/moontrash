@@ -68,7 +68,7 @@ var app = new Vue({
     },
     recogImage: function(url) {
       let self = this
-      axios.post('http://localhost:3000/analyze-picture', {
+      axios.post('http://moontrashtk-in.cloud.revoluz.io:49392/analyze-picture', {
         img: url
       })
       .then(function(response) {

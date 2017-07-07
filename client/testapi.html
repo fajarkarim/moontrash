@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="cobaTest()">Try It</button>
+
+<p id="demo"></p>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "your current position is:" +
+    "\nLatitude: " + position.coords.latitude +
+    "\nLongitude: " + position.coords.longitude;
+    axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=true`)
+    .then(function(response) {
+      x.innerHTML = response.data.results[0].formatted_address
+    })
+}
+
+function cobaTest() {
+  axios.post("http://localhost:3000/analyze-picture", {
+    img: "http://2.bp.blogspot.com/-H9fGS9LpINY/VNXvp-IwxTI/AAAAAAAAFNk/FRIwAE74Xlk/s1600/Sampah.jpg"
+  }).then(function(response) {
+    x.innerHTML = response.data[0].class
+  }).catch(function(err) {
+    console.log(err);
+  })
+}
+
+</script>
+
+</body>
+</html>

@@ -4,7 +4,9 @@ var app = new Vue({
     message: 'adfadfas',
     isLogin: false,
     name: '',
-    image: ''
+    image: '',
+    url: '',
+    location: 'kebon jeruk'
   },
   methods: {
     logout: function () {
@@ -15,11 +17,13 @@ var app = new Vue({
     },
     postStatus : function () {
       console.log('masuk');
+      let self = this
       FB.api(
           "/me/feed",
           "POST",
           {
-              "message": "ada sampah"
+              "message": "ada sampah",
+              "with": "location"
           },
           function (response) {
             console.log(response);
